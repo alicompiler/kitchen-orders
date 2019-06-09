@@ -4,6 +4,9 @@ import LoginStatus from "./LoginStatus";
 import LoadingContainer from "../SharedComponent/LoadingContainer";
 import RegisterForm from "../User/RegisterForm/RegisterForm";
 
+import firebase from "./Firebase";
+import AppRouter from "./Router";
+
 interface Props {
 }
 
@@ -20,13 +23,10 @@ export default class App extends React.Component<Props, State> {
     }
 
     render() {
+        console.log('user', firebase.auth().currentUser);
         return (
             <div>
-                <FirebaseAuth onLoginError={error => console.log(error)}
-                              onLoginStatusChanged={this.onLoginStatusChanged}/>
-                {
-                    this.renderContent()
-                }
+                <AppRouter/>
             </div>
         )
     }
@@ -35,23 +35,5 @@ export default class App extends React.Component<Props, State> {
         console.log(loginStatus, user, userDoc);
         this.setState({user: user, loginState: loginStatus, userDoc: userDoc});
     };
-
-
-    private renderContent = () => {
-        switch (this.state.loginState) {
-            case LoginStatus.LOGGING_IN :
-                return <LoadingContainer/>;
-            case LoginStatus.LOGGED_IN:
-                if (this.state.userDoc === null) {
-                    return <RegisterForm/>
-                } else {
-                    return <h1>TODO : USER MAIN PAGE</h1>
-                }
-            case LoginStatus.LOGGED_OUT:
-                return <h1>Logged Out</h1>
-        }
-    }
-
-
 
 }
