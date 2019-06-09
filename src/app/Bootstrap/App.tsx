@@ -1,33 +1,45 @@
 import * as React from "react";
-import LoginStatus from "./LoginStatus";
 import AppRouter, {UserType} from "./Router";
+import firebase from "./Firebase";
+import LoadingContainer from "../SharedComponent/LoadingContainer";
 
 interface Props {
 }
 
 interface State {
-    loginState: LoginStatus;
-    user: any | null;
-    userDoc: any;
+    user: any;
+    loading: boolean;
+    userType?: UserType;
 }
 
 export default class App extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
-        this.state = {loginState: LoginStatus.LOGGING_IN, user: null, userDoc: null};
+        this.state = {loading: true, user: null};
+    }
+
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                const userType = user.isAnonymous ? UserType.USER : UserType.ADMIN;
+                this.setState({loading: false, userType: userType});
+                if (window.location.href.endsWith("/login/user")) {
+                    window.location.href = "/";
+                }
+            } else {
+                this.setState({loading: false})
+            }
+        })
     }
 
     render() {
-        const isUserAlreadyLoggedIn = !!localStorage['uid'];
-        let userType = undefined;
-        if (isUserAlreadyLoggedIn && this.state.loginState !== LoginStatus.LOGGED_OUT) {
-            const currentUserType = localStorage['userType'];
-            userType = currentUserType === "admin" ? UserType.ADMIN : UserType.USER;
+        if (this.state.loading) {
+            return <LoadingContainer message={"جاري محاولة تسجيل الدخول..."}/>;
         }
 
         return (
             <div>
-                <AppRouter userType={userType}/>
+                <AppRouter userType={this.state.userType}/>
             </div>
         )
     }
