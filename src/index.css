@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    direction: rtl;
+}
+
+.container {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.home_background {
+    width: 600px;
+    height: 400px;
+    display: block;
+    margin: 36px auto auto;
+}
+
+.admin-login-button {
+    padding: 16px;
+    width: 160px;
+    border-radius: 5px;
+    background: #C4E7D4;
+    color: #343434;
+    text-align: center;
+    text-decoration: none;
+}
+
+.user-login-button {
+    padding: 16px;
+    width: 160px;
+    border-radius: 5px;
+    background: #63585E;
+    text-align: center;
+    color: #C4E7D4;
+    text-decoration: none;
+}
+
+
+.app-header {
+    background: #998DA0;
+    color: #FFFFFF;
+    padding: 16px 0;
+}
+
+.app-header-content {
+    display: flex;
+    align-items: center;
+}
+
+.app-header-content .logo-and-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-header-content .logo-and-name img {
+    width: 64px;
+    height: 64px;
+}
+
+.app-header-content .logo-and-name p {
+    margin-right: 16px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.login-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
