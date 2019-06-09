@@ -21,7 +21,7 @@ body {
 
 .admin-login-button {
     padding: 16px;
-    width: 160px;
+    width: 180px;
     border-radius: 5px;
     background: #C4E7D4;
     color: #343434;
@@ -31,14 +31,13 @@ body {
 
 .user-login-button {
     padding: 16px;
-    width: 160px;
+    width: 180px;
     border-radius: 5px;
     background: #63585E;
     text-align: center;
     color: #C4E7D4;
     text-decoration: none;
 }
-
 
 .app-header {
     background: #998DA0;

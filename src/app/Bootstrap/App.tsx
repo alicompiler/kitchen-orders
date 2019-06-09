@@ -1,11 +1,6 @@
 import * as React from "react";
-import FirebaseAuth from "./FirebaseAuth";
 import LoginStatus from "./LoginStatus";
-import LoadingContainer from "../SharedComponent/LoadingContainer";
-import RegisterForm from "../User/RegisterForm/RegisterForm";
-
-import firebase from "./Firebase";
-import AppRouter from "./Router";
+import AppRouter, {UserType} from "./Router";
 
 interface Props {
 }
@@ -23,17 +18,18 @@ export default class App extends React.Component<Props, State> {
     }
 
     render() {
-        console.log('user', firebase.auth().currentUser);
+        const isUserAlreadyLoggedIn = !!localStorage['uid'];
+        let userType = undefined;
+        if (isUserAlreadyLoggedIn && this.state.loginState !== LoginStatus.LOGGED_OUT) {
+            const currentUserType = localStorage['userType'];
+            userType = currentUserType === "admin" ? UserType.ADMIN : UserType.USER;
+        }
+
         return (
             <div>
-                <AppRouter/>
+                <AppRouter userType={userType}/>
             </div>
         )
     }
-
-    private onLoginStatusChanged = (loginStatus: LoginStatus, user: any, userDoc: any) => {
-        console.log(loginStatus, user, userDoc);
-        this.setState({user: user, loginState: loginStatus, userDoc: userDoc});
-    };
 
 }
