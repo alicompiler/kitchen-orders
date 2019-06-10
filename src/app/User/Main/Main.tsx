@@ -4,6 +4,7 @@ import firebase from "./../../Bootstrap/Firebase";
 import {Route, RouteComponentProps, Switch} from "react-router";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import HorizontalLoader from "../../SharedComponent/HorizontalLoader/HorizontalLoader";
+import {Link} from "react-router-dom";
 
 interface Props {
     route: RouteComponentProps
@@ -12,7 +13,7 @@ interface Props {
 export default class Main extends React.Component<Props, any> {
     constructor(props: Props) {
         super(props);
-        this.state = {loading: true, user: null};
+        this.state = {loading: true, user: null, activeTab: null};
     }
 
     componentDidMount() {
@@ -23,7 +24,7 @@ export default class Main extends React.Component<Props, any> {
                 if (doc.exists) {
                     this.setState({loading: false, user: doc.data()});
                 } else {
-                    this.setState({loading: false, user: null});
+                    this.setState({loading: false, user: null, activeTab: 'my-info'});
                     this.props.route.history.push('/my-info');
                 }
             });
@@ -45,24 +46,36 @@ export default class Main extends React.Component<Props, any> {
             <div>
                 <UserAppHeader/>
                 <br/><br/>
-                <div className={'tabs'} style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    {
-                        this.state.loading ?
-                            <HorizontalLoader/>
-                            :
-                            <>
-                                <div className={'container'}>
-                                    <Route exact path={"/my-info"} component={() => <RegisterForm/>}/>
-                                    <Route exact path={"/orders"} component={() => <h1>My Orders</h1>}/>
-                                    <Route exact path={"/orders/:id"} component={() => <h1>Order Details</h1>}/>
+                {
+                    this.state.loading ?
+                        <HorizontalLoader/>
+                        :
+                        <>
+                            <div className={'container'}>
+                                <div className={'button-tabs'}>
+                                    <Link className={this.state.activeTab === 'home' ? 'active' : ''}
+                                          onClick={() => this.setState({activeTab: 'home'})}
+                                          to={'/'}>
+                                        الرئيسية
+                                    </Link>
+                                    <Link className={this.state.activeTab === 'new-order' ? 'active' : ''}
+                                          onClick={() => this.setState({activeTab: 'new-order'})}
+                                          to={'/new-order'}>
+                                        ارسال طلب
+                                    </Link>
+                                    <Link className={this.state.activeTab === 'my-info' ? 'active' : ''}
+                                          onClick={() => this.setState({activeTab: 'my-info'})}
+                                          to={'/my-info'}>
+                                        معلوماتي
+                                    </Link>
                                 </div>
-                            </>
-                    }
-                </div>
+                                <Route exact path={"/my-info"} component={() => <RegisterForm/>}/>
+                                <Route exact path={"/"} component={() => <h1>My Orders</h1>}/>
+                                <Route exact path={"/new-order"} component={() => <h1>Send Order</h1>}/>
+                                <Route exact path={"/orders/:id"} component={() => <h1>Order Details</h1>}/>
+                            </div>
+                        </>
+                }
             </div>
         )
     }

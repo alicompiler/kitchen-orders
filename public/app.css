@@ -116,3 +116,34 @@ body {
         width: 100%;
     }
 }
+
+.button-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 24px;
+    border-bottom: #02C39A 1px solid;
+    margin-bottom: 24px;
+}
+
+.button-tabs a {
+    background: #00A896;
+    border: 0;
+    width: 120px;
+    border-radius: 120px;
+    color: #FFFFFF;
+    padding: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    margin: 6px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.button-tabs a.active {
+    background: #05668D;
+    color: #FFFFFF;
+}
