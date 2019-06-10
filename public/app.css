@@ -9,6 +9,7 @@ body {
 
 .container {
     max-width: 1024px;
+    width: 100%;
     margin: auto;
 }
 
@@ -72,4 +73,46 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
+}
+
+.user-info-form {
+    width: 350px;
+}
+
+.user-info-form input {
+    width: 100%;
+    background: #EEEEEE;
+    color: #2B2B2B;
+    padding: 16px 8px;
+    border: 0;
+    border-radius: 5px;
+    display: block;
+    margin-bottom: 24px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.user-info-form button {
+    background: #02C39A;
+    border: 0;
+    width: 140px;
+    border-radius: 120px;
+    color: #FFFFFF;
+    padding: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+}
+
+.user-info-form button.disabled {
+    background: #DDD;
+    color: #777;
+}
+
+@media only screen and (max-width: 768px) {
+    .user-info-form {
+        width: 100%;
+    }
 }

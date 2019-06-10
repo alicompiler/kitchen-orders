@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {BrowserRouter, Route, Switch} from "react-router-dom"
+import {BrowserRouter, Route, RouteComponentProps, Switch} from "react-router-dom"
 import RegisterForm from "../User/RegisterForm/RegisterForm";
 import HomePage from "../SharedComponent/HomePage";
 import SignIn from "../User/SignIn/SignIn";
@@ -48,10 +48,7 @@ export default class AppRouter extends React.Component<Props> {
 
     private userRoutes = () => {
         return <Switch>
-            <Route exact path={"/"} component={() => <Main/>}/>
-            <Route exact path={"/my-info"} component={() => <RegisterForm/>}/>
-            <Route exact path={"/orders"} component={() => <h1>My Orders</h1>}/>
-            <Route exact path={"/orders/:id"} component={() => <h1>Order Details</h1>}/>
+            <Route path={"/"} component={(route: RouteComponentProps) => <Main route={route}/>}/>
         </Switch>
     };
 
