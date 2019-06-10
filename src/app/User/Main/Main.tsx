@@ -5,6 +5,7 @@ import {Route, RouteComponentProps, Switch} from "react-router";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import HorizontalLoader from "../../SharedComponent/HorizontalLoader/HorizontalLoader";
 import {Link} from "react-router-dom";
+import SendOrder from "../SendOrder/SendOrder";
 
 interface Props {
     route: RouteComponentProps
@@ -71,7 +72,7 @@ export default class Main extends React.Component<Props, any> {
                                 </div>
                                 <Route exact path={"/my-info"} component={() => <RegisterForm/>}/>
                                 <Route exact path={"/"} component={() => <h1>My Orders</h1>}/>
-                                <Route exact path={"/new-order"} component={() => <h1>Send Order</h1>}/>
+                                <Route exact path={"/new-order"} component={() => <SendOrder/>}/>
                                 <Route exact path={"/orders/:id"} component={() => <h1>Order Details</h1>}/>
                             </div>
                         </>
