@@ -147,3 +147,73 @@ body {
     background: #05668D;
     color: #FFFFFF;
 }
+
+.orders {
+    padding: 12px;
+}
+
+.orders .order-item {
+    padding: 28px 0;
+    border-bottom: 1px solid #028090;
+}
+
+.orders .order-item:last-child {
+    border-bottom: 0;
+}
+
+.orders .order-item .order-item-info {
+    display: flex;
+    align-items: center;
+}
+
+.orders .order-item .order-item-info .delete-button {
+    margin-left: 20px;
+}
+
+.orders .order-item .order-item-info .delete-button i {
+    font-size: 1.5em;
+    color: #BA3D50;
+    cursor: pointer;
+}
+
+.orders .order-item .order-item-info .order-name {
+    font-size: 20px;
+    color: #028090;
+    width: 200px;
+    background: #EEE;
+    border-radius: 3px;
+    padding: 8px 4px;
+    margin-left: 16px;
+}
+
+.orders .order-item .order-item-info .order-count {
+    display: flex;
+    align-items: center;
+}
+
+.orders .order-item .order-item-info .order-count > a {
+    margin-right: 16px;
+}
+
+.orders .order-item .order-item-info .order-count i {
+    font-size: 1.8em;
+    color: #05668D;
+    cursor: pointer;
+}
+
+.orders .order-item .order-item-info .order-count p.order-count {
+    font-size: 18px;
+    font-weight: bold;
+    color: #05668D;
+    padding: 10px 4px;
+}
+
+.orders .order-item .order-item-note > input {
+    box-sizing: border-box;
+    padding: 16px;
+    border: 0;
+    width: 364px;
+    font-size: 14px;
+    background: #EEE;
+    margin-top: 16px;
+}
