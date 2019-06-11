@@ -23,7 +23,7 @@ export default class App extends React.Component<Props, State> {
             if (user) {
                 const userType = user.isAnonymous ? UserType.USER : UserType.ADMIN;
                 this.setState({loading: false, userType: userType});
-                if (window.location.href.endsWith("/login/user")) {
+                if (window.location.href.endsWith("/login/user") || window.location.href.endsWith("/login/admin")) {
                     window.location.href = "/";
                 }
             } else {
