@@ -2,15 +2,26 @@ import * as React from "react";
 import firebase from "./../../Bootstrap/Firebase";
 import HorizontalLoader from "../../SharedComponent/HorizontalLoader/HorizontalLoader";
 import Select from "react-select";
+import {Link} from "react-router-dom";
 
 interface Props {
+    user: any;
 }
 
 export default class SendOrder extends React.Component<Props, any> {
 
     constructor(props: Props) {
         super(props);
-        this.state = {menu: [], loadingMenu: true, orders: [], error: false};
+        this.state = {
+            menu: [],
+            loadingMenu: true,
+            orders: [],
+            error: false,
+            sending: false,
+            sendingFail: false,
+            done: false,
+            place: props.user.place
+        };
     }
 
     componentDidMount() {
@@ -26,9 +37,9 @@ export default class SendOrder extends React.Component<Props, any> {
     }
 
     private addItem = (item: any) => {
-        const orders = this.state.orders;
+        const orders = [...this.state.orders];
         let itemExists = false;
-        for (let i = 0; i < this.state.orders.length; i++) {
+        for (let i = 0; i < orders.length; i++) {
             if (item.value === orders[i].id) {
                 orders[i].count++;
                 itemExists = true;
@@ -37,36 +48,68 @@ export default class SendOrder extends React.Component<Props, any> {
         if (!itemExists) {
             orders.push({id: item.value, name: item.label, count: 1});
         }
-        this.setState({orders: [...orders]});
+        this.setState({orders: orders});
     };
 
 
     private removeOrder = (index: number) => {
-        const orders = this.state.orders;
+        const orders = [...this.state.orders];
         orders.splice(index, 1);
-        this.setState({orders: [...orders]});
+        console.log(orders);
+        this.setState({orders: orders});
     };
 
     private increaseOrderCount = (index: number) => {
-        const orders = this.state.orders;
+        const orders = [...this.state.orders];
         orders[index].count++;
-        this.setState({orders: [...orders]});
+        this.setState({orders: orders});
     };
 
     private decreaseOrderCount = (index: number) => {
-        const orders = this.state.orders;
+        const orders = [...this.state.orders];
         if (orders[index].count > 0)
             orders[index].count--;
-        this.setState({orders: [...orders]});
+        this.setState({orders: orders});
     };
 
     private setOrderNote = (index: number, note: string) => {
-        const orders = this.state.orders;
+        const orders = [...this.state.orders];
         orders[index].note = note;
-        this.setState({orders: [...orders]});
+        console.log(orders);
+        this.setState({orders: orders});
+    };
+
+    private send = () => {
+        const orders = this.state.orders;
+        const db = firebase.firestore();
+
+        this.setState({sending: true, sendingFail: false, done: false});
+
+        const uid = (firebase.auth().currentUser as any).uid;
+        const order = {
+            items: orders,
+            userId: uid,
+            user: this.props.user.name,
+            place: this.state.place
+        };
+        db.collection("orders").add(order)
+            .then(() => this.setState({sending: false, sendingFail: false, done: true}))
+            .catch(() => this.setState({sending: false, sendingFail: true, done: false}));
+    };
+
+    private startAgain = () => {
+        this.setState({sending: false, orders: [], sendingFail: false, done: false});
     };
 
     render() {
+
+        if (this.state.done) {
+            return <div>
+                <button onClick={this.startAgain}>Start Again</button>
+                <Link to={'/'}>Go Home</Link>
+            </div>
+        }
+
         if (this.state.error) {
             return <h1>Error</h1>;
         }
@@ -78,9 +121,11 @@ export default class SendOrder extends React.Component<Props, any> {
 
         const options: any = [];
         itemKeys.map(itemKey => options.push({label: this.state.menu[itemKey], value: itemKey}));
+        // noinspection JSUnusedGlobalSymbols
         return (
             <div style={{padding: 16}}>
 
+                <p>القائمة : </p>
                 <Select styles={{
                     option: (style) => {
                         return {
@@ -115,7 +160,8 @@ export default class SendOrder extends React.Component<Props, any> {
                                     </div>
                                 </div>
                                 <div className={'order-item-note'}>
-                                    <input onChange={e => this.setOrderNote(index, e.target.value)}
+                                    <input value={order.note ? order.note : ''}
+                                           onChange={e => this.setOrderNote(index, e.target.value)}
                                            placeholder={'الملاحظات'}/>
                                 </div>
                             </div>;
@@ -124,6 +170,23 @@ export default class SendOrder extends React.Component<Props, any> {
                 </div>
 
                 <br/><br/><br/>
+
+                {
+                    this.state.orders.length > 0 &&
+                    <div>
+                        <div>
+                            <label>المكان</label>
+                            <input placeholder={'المكان'} value={this.state.place}
+                                   onChange={e => this.setState({place: e.target.value})}/>
+                        </div>
+                        <button className={`main-button ${this.state.sending ? 'disabled' : ''}`}
+                                disabled={this.state.sending} onClick={this.send}>ارسال
+                        </button>
+                        {
+                            this.state.sending && <HorizontalLoader/>
+                        }
+                    </div>
+                }
 
             </div>
         )

@@ -92,6 +92,25 @@ body {
     box-sizing: border-box;
 }
 
+.main-button {
+    background: #02C39A;
+    border: 0;
+    width: 140px;
+    border-radius: 120px;
+    color: #FFFFFF;
+    padding: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+}
+
+.main-button.disabled {
+    background: #DEDEDE;
+    color: #454545;
+}
+
 .user-info-form button {
     background: #02C39A;
     border: 0;

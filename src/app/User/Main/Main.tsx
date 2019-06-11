@@ -72,7 +72,7 @@ export default class Main extends React.Component<Props, any> {
                                 </div>
                                 <Route exact path={"/my-info"} component={() => <RegisterForm/>}/>
                                 <Route exact path={"/"} component={() => <h1>My Orders</h1>}/>
-                                <Route exact path={"/new-order"} component={() => <SendOrder/>}/>
+                                <Route exact path={"/new-order"} component={() => <SendOrder user={this.state.user}/>}/>
                                 <Route exact path={"/orders/:id"} component={() => <h1>Order Details</h1>}/>
                             </div>
                         </>
