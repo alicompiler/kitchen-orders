@@ -1,7 +1,7 @@
 import * as React from "react";
 import UserAppHeader from "../UserAppHeader";
 import firebase from "./../../Bootstrap/Firebase";
-import {Route, RouteComponentProps, Switch} from "react-router";
+import {Route, RouteComponentProps} from "react-router";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import HorizontalLoader from "../../SharedComponent/HorizontalLoader/HorizontalLoader";
 import {Link} from "react-router-dom";
@@ -25,7 +25,7 @@ export default class Main extends React.Component<Props, any> {
                 if (doc.exists) {
                     this.setState({loading: false, user: doc.data()});
                 } else {
-                    this.setState({loading: false, user: null, activeTab: 'my-info'});
+                    this.setState({loading: false, user: {}, activeTab: 'my-info'});
                     this.props.route.history.push('/my-info');
                 }
             });
@@ -35,14 +35,6 @@ export default class Main extends React.Component<Props, any> {
     }
 
     render() {
-        const buttonStyle = {
-            width: 120,
-            background: '#777',
-            padding: 16,
-            border: 0,
-            borderRadius: 120,
-            margin: 8
-        };
         return (
             <div>
                 <UserAppHeader/>
