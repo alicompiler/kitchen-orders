@@ -1,11 +1,11 @@
 import * as React from "react";
 
 import {BrowserRouter, Route, RouteComponentProps, Switch} from "react-router-dom"
-import RegisterForm from "../User/RegisterForm/RegisterForm";
-import HomePage from "../SharedComponent/HomePage";
-import SignIn from "../User/SignIn/SignIn";
-import Main from "../User/Main/Main";
-import AdminSignIn from "../Admin/SignIn/AdminSignIn";
+import AdminMain from "./../Admin/Main/Main";
+import HomePage from "./../SharedComponent/HomePage";
+import SignIn from "./../User/SignIn/SignIn";
+import Main from "./../User/Main/Main";
+import AdminSignIn from "./../Admin/SignIn/AdminSignIn";
 
 export enum UserType {
     USER = 1,
@@ -41,9 +41,7 @@ export default class AppRouter extends React.Component<Props> {
 
     private adminRoutes = () => {
         return <Switch>
-            <Route exact path={"/"} component={() => <h1>Admin Main Page</h1>}/>
-            <Route exact path={"/orders"} component={() => <h1>New Orders</h1>}/>
-            <Route exact path={"/orders/:id"} component={() => <h1>Order Detail</h1>}/>
+            <Route path={"/"} component={(route: RouteComponentProps) => <AdminMain route={route}/>}/>
         </Switch>
     };
 
