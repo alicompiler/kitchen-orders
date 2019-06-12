@@ -11,12 +11,12 @@ export default class MyOrdersContainer extends OrdersContainer {
         db.collection("orders")
             .where("userId", "==", user.uid)
             .onSnapshot((snapshot) => {
-            const orders: any[] = [];
-            snapshot.forEach((doc) => {
-                orders.push(doc.data());
-            });
-            this.setState({orders: orders, loading: false, error: false});
-        })
+                const orders: any[] = [];
+                snapshot.forEach((doc) => {
+                    orders.push({...doc.data(), orderId: doc.id});
+                });
+                this.setState({orders: orders, loading: false, error: false});
+            })
     }
 
 }

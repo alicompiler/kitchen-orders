@@ -3,13 +3,12 @@ import OrdersContainer from "../../SharedComponent/OrdersList/OrdersContainer";
 import firebase from "../../Bootstrap/Firebase";
 
 
-export default class UnfinishedOrdersContainer extends OrdersContainer {
+export default class AllOrdersContainer extends OrdersContainer {
 
     protected fetchOrders(): void {
         const db = firebase.firestore();
         db.collection("orders")
-            .where("status", ">", 0)
-            .where("status", "<", 100)
+            .limit(50)
             .onSnapshot((snapshot) => {
                 const orders: any[] = [];
                 snapshot.forEach((doc) => {

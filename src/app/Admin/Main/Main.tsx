@@ -2,6 +2,8 @@ import * as React from "react";
 import {Route, RouteComponentProps} from "react-router";
 import {Link} from "react-router-dom";
 import AppHeader from "../../SharedComponent/AppHeader";
+import UnfinishedOrdersContainer from "../Orders/UnfinishedOrdersContainer";
+import AllOrdersContainer from "../Orders/AllOrdersContainer";
 
 interface Props {
     route: RouteComponentProps
@@ -10,7 +12,7 @@ interface Props {
 export default class Main extends React.Component<Props, any> {
     constructor(props: Props) {
         super(props);
-        this.state = {user: null, activeTab: null};
+        this.state = {user: null, activeTab: 'unfinished'};
     }
 
     render() {
@@ -21,18 +23,18 @@ export default class Main extends React.Component<Props, any> {
                 <div className={'container'}>
                     <div className={'button-tabs'}>
                         <Link className={this.state.activeTab === 'unfinished' ? 'active' : ''}
-                              onClick={() => this.setState({activeTab: 'new-order'})}
+                              onClick={() => this.setState({activeTab: 'unfinished'})}
                               to={'/'}>
                             غير المكتمل
                         </Link>
-                        <Link className={this.state.activeTab === 'home' ? 'active' : ''}
-                              onClick={() => this.setState({activeTab: 'home'})}
+                        <Link className={this.state.activeTab === 'all' ? 'active' : ''}
+                              onClick={() => this.setState({activeTab: 'all'})}
                               to={'/all'}>
                             كل الطلبات
                         </Link>
                     </div>
-                    <Route exact path={"/"} component={() => <h1>Unfinished Orders</h1>}/>
-                    <Route exact path={"/all"} component={() => <h1>All Orders</h1>}/>
+                    <Route exact path={"/"} component={() => <UnfinishedOrdersContainer isAdmin={true}/>}/>
+                    <Route exact path={"/all"} component={() => <AllOrdersContainer isAdmin={true}/>}/>
 
                 </div>
             </div>

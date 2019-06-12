@@ -3,7 +3,7 @@ import OrderList from "./OrderList";
 import HorizontalLoader from "../HorizontalLoader/HorizontalLoader";
 
 interface Props {
-
+    isAdmin?: boolean;
 }
 
 export default abstract class OrdersContainerBase extends React.Component<Props, any> {
@@ -26,6 +26,6 @@ export default abstract class OrdersContainerBase extends React.Component<Props,
         } else if (this.state.error) {
             return <h1>Error</h1>
         }
-        return <OrderList orders={this.state.orders}/>
+        return <OrderList isAdmin={this.props.isAdmin} orders={this.state.orders}/>
     }
 }

@@ -1,5 +1,4 @@
 import * as React from "react";
-import OrderStatus from "./OrderStatus";
 import OrderActions from "./OrderActions";
 import OrderItems from "./OrderItems";
 import OrderHeader from "./OrderHeader";
