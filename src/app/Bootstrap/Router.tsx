@@ -5,6 +5,7 @@ import RegisterForm from "../User/RegisterForm/RegisterForm";
 import HomePage from "../SharedComponent/HomePage";
 import SignIn from "../User/SignIn/SignIn";
 import Main from "../User/Main/Main";
+import AdminSignIn from "../Admin/SignIn/AdminSignIn";
 
 export enum UserType {
     USER = 1,
@@ -55,7 +56,7 @@ export default class AppRouter extends React.Component<Props> {
     private nonLoginUserRoutes = () => {
         return <Switch>
             <Route exact path={"/"} component={() => <HomePage/>}/>
-            <Route exact path={"/login/admin"} component={() => <h1>Admin Login</h1>}/>
+            <Route exact path={"/login/admin"} component={() => <AdminSignIn/>}/>
             <Route exact path={"/login/user"} component={() => <SignIn/>}/>
         </Switch>
     }
