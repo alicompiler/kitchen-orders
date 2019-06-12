@@ -6,7 +6,8 @@ import RegisterForm from "../RegisterForm/RegisterForm";
 import HorizontalLoader from "../../SharedComponent/HorizontalLoader/HorizontalLoader";
 import {Link} from "react-router-dom";
 import SendOrder from "../SendOrder/SendOrder";
-import OrderList from "../OrderList/OrderList";
+import OrderList from "../../SharedComponent/OrdersList/OrderList";
+import MyOrdersContainer from "../OrderList/MyOrdersContainer";
 
 interface Props {
     route: RouteComponentProps
@@ -64,7 +65,7 @@ export default class Main extends React.Component<Props, any> {
                                     </Link>
                                 </div>
                                 <Route exact path={"/my-info"} component={() => <RegisterForm/>}/>
-                                <Route exact path={"/"} component={() => <OrderList/>}/>
+                                <Route exact path={"/"} component={() => <MyOrdersContainer/>}/>
                                 <Route exact path={"/new-order"} component={() => <SendOrder user={this.state.user}/>}/>
                                 <Route exact path={"/orders/:id"} component={() => <h1>Order Details</h1>}/>
                             </div>
