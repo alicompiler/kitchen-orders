@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/messaging';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBHRBQphohRg0i6y4UbjmNQEDlBmi4YzwQ",
@@ -15,3 +16,16 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export default firebase;
+
+
+firebase.messaging().requestPermission()
+    .then(() => {
+        return firebase.messaging().getToken();
+    }).then(token => console.log(token))
+    .catch(() => {
+        console.log('permission denied');
+    });
+
+firebase.messaging().onMessage((message: any) => {
+    console.log('message', message);
+});

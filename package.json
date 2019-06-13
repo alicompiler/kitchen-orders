@@ -5,7 +5,7 @@
   "dependencies": {
     "@csstools/normalize.css": "^10.1.0",
     "@types/react-select": "^2.0.19",
-    "firebase": "^6.1.1",
+    "firebase": "6.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
