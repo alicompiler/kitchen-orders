@@ -2,13 +2,26 @@ import * as React from "react";
 import firebase from "./../../Bootstrap/Firebase";
 import HorizontalLoader from "../../SharedComponent/HorizontalLoader/HorizontalLoader";
 import Select from "react-select";
-import {Link} from "react-router-dom";
+import DoneView from "./DoneView";
+import Orders from "./Orders";
+import SendOrderFormFooter from "./SendOrderFormFooter";
 
 interface Props {
     user: any;
 }
 
-export default class SendOrder extends React.Component<Props, any> {
+interface State {
+    menu: any,
+    loadingMenu: boolean,
+    orders: any[],
+    error: boolean,
+    sending: boolean,
+    sendingFail: boolean,
+    done: boolean,
+    place: string
+}
+
+export default class SendOrder extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
@@ -90,7 +103,8 @@ export default class SendOrder extends React.Component<Props, any> {
             items: orders,
             userId: uid,
             user: this.props.user.name,
-            place: this.state.place
+            place: this.state.place,
+            time: firebase.firestore.FieldValue.serverTimestamp()
         };
         db.collection("orders").add(order)
             .then(() => this.setState({sending: false, sendingFail: false, done: true}))
@@ -104,22 +118,8 @@ export default class SendOrder extends React.Component<Props, any> {
     render() {
 
         if (this.state.done) {
-            return <div>
-                <div style={{padding: 24, textAlign: 'center'}}>
-                    <i className={'fas fa-check'} style={{color: '#02C39A', fontSize: '4em'}}/>
-                    <p style={{color: '#777', textAlign: 'center', margin: '16px 0'}}>
-                        تم ارسال الطلب
-                    </p>
-                </div>
-                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-                    <button className={'secondary-button'} onClick={this.startAgain}>ارسال طلب جديد</button>
-                    <span style={{width: 32, height: 10}}/>
-                    <Link className={'main-button'} to={'/'}>القائمة الرئيسية</Link>
-                </div>
-
-            </div>
+            return <DoneView startAgain={this.startAgain}/>
         }
-
         if (this.state.error) {
             return <h1>Error</h1>;
         }
@@ -151,53 +151,17 @@ export default class SendOrder extends React.Component<Props, any> {
                 } onChange={this.addItem} options={options}/>
 
                 <div className={'orders'}>
-                    {
-                        this.state.orders.map((order: any, index: number) => {
-                            return <div className={'order-item'} key={index}>
-                                <div className={'order-item-info'}>
-                                    <a onClick={() => this.removeOrder(index)} className={'delete-button'}>
-                                        <i className={'fas fa-trash-alt'}/>
-                                    </a>
-                                    <p className={'order-name'}>{order.name}</p>
-                                    <div className={'order-count'}>
-                                        <p className={'order-count'}>{order.count}</p>
-                                        <a onClick={() => this.increaseOrderCount(index)} className={'plus-button'}>
-                                            <i className={'fas fa-plus-square'}/>
-                                        </a>
-                                        <a onClick={() => this.decreaseOrderCount(index)} className={'minus-button'}>
-                                            <i className={'fas fa-minus-square'}/>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className={'order-item-note'}>
-                                    <input value={order.note ? order.note : ''}
-                                           onChange={e => this.setOrderNote(index, e.target.value)}
-                                           placeholder={'الملاحظات'}/>
-                                </div>
-                            </div>;
-                        })
-                    }
+                    <Orders orders={this.state.orders} removeOrder={this.removeOrder}
+                            increaseOrderCount={this.increaseOrderCount}
+                            decreaseOrderCount={this.decreaseOrderCount}
+                            setOrderNote={this.setOrderNote}/>
                 </div>
 
                 <br/><br/><br/>
 
                 {
                     this.state.orders.length > 0 &&
-                    <div>
-                        <div>
-                            <label>المكان</label>
-                            <input id={'place'} style={{display: 'inline-block', marginRight: 16}}
-                                   className={'main-input'}
-                                   placeholder={'المكان'} value={this.state.place}
-                                   onChange={e => this.setState({place: e.target.value})}/>
-                        </div>
-                        <button className={`main-button ${this.state.sending ? 'disabled' : ''}`}
-                                disabled={this.state.sending} onClick={this.send}>ارسال
-                        </button>
-                        {
-                            this.state.sending && <HorizontalLoader/>
-                        }
-                    </div>
+                    <SendOrderFormFooter place={this.state.place} sending={this.state.sending} send={this.send}/>
                 }
 
             </div>
