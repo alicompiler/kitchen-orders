@@ -5,6 +5,7 @@ import Select from "react-select";
 import DoneView from "./DoneView";
 import Orders from "./Orders";
 import SendOrderFormFooter from "./SendOrderFormFooter";
+import OrderStatus from "../../SharedComponent/OrdersList/OrderStatus";
 
 interface Props {
     user: any;
@@ -104,7 +105,8 @@ export default class SendOrder extends React.Component<Props, State> {
             userId: uid,
             user: this.props.user.name,
             place: this.state.place,
-            time: firebase.firestore.FieldValue.serverTimestamp()
+            time: firebase.firestore.FieldValue.serverTimestamp(),
+            status: OrderStatus.WAITING
         };
         db.collection("orders").add(order)
             .then(() => this.setState({sending: false, sendingFail: false, done: true}))
