@@ -3,13 +3,17 @@ import firebase from "./../../Bootstrap/Firebase";
 import HorizontalLoader from "../../SharedComponent/HorizontalLoader/HorizontalLoader";
 import {Link} from "react-router-dom";
 
+interface Props {
+    onUpdate: (user: any) => void;
+}
+
 interface State {
     name: string;
     place: string;
     sending: boolean;
 }
 
-export default class RegisterForm extends React.Component<any, State> {
+export default class RegisterForm extends React.Component<Props, State> {
     constructor(props: any) {
         super(props);
         this.state = {name: '', place: '', sending: false};
@@ -48,12 +52,12 @@ export default class RegisterForm extends React.Component<any, State> {
         this.setState({sending: true});
         const db = firebase.firestore();
         const user: any = firebase.auth().currentUser;
-        db.collection("users").doc(user.uid).set({
-            name: this.state.name,
-            place: this.state.place
-        }).then(() => {
-            this.setState({sending: false})
-        }).catch(() => {
+        const data = {name: this.state.name, place: this.state.place};
+        db.collection("users").doc(user.uid).set(data)
+            .then(() => {
+                this.setState({sending: false});
+                this.props.onUpdate(user);
+            }).catch(() => {
             this.setState({sending: false});
         });
     }

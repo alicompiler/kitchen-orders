@@ -11,7 +11,9 @@ export default class UserAppHeader extends React.Component {
                         <p>نظام الطلبات</p>
                     </div>
                     <div className={'actions'}>
-
+                        <a>
+                            <i className={'fas fa-exit'} style={{fontSize: 18, color: 'red'}}/>
+                        </a>
                     </div>
                 </div>
             </div>

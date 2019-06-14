@@ -47,7 +47,6 @@
     text-align: center;
 }
 
-
 body {
     direction: rtl;
 }
@@ -86,14 +85,15 @@ body {
 }
 
 .app-header {
-    background: #998DA0;
+    background: #028090;
     color: #FFFFFF;
-    padding: 16px 0;
+    padding: 10px 0;
 }
 
 .app-header-content {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .app-header-content .logo-and-name {
@@ -103,8 +103,8 @@ body {
 }
 
 .app-header-content .logo-and-name img {
-    width: 64px;
-    height: 64px;
+    width: 32px;
+    height: 32px;
 }
 
 .app-header-content .logo-and-name p {
@@ -289,7 +289,6 @@ body {
     margin-right: 16px;
 }
 
-
 .order-list-item .user-info .info .status {
     padding: 4px;
     font-size: 12px;
@@ -322,7 +321,6 @@ body {
     font-size: 16px;
     display: inline-block;
 }
-
 
 .order-list-item .items .item .info {
     margin-right: 16px;

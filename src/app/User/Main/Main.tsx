@@ -1,19 +1,22 @@
 import * as React from "react";
 import UserAppHeader from "../UserAppHeader";
 import firebase from "./../../Bootstrap/Firebase";
-import {Route, RouteComponentProps} from "react-router";
-import RegisterForm from "../RegisterForm/RegisterForm";
+import {RouteComponentProps} from "react-router";
 import HorizontalLoader from "../../SharedComponent/HorizontalLoader/HorizontalLoader";
-import {Link} from "react-router-dom";
-import SendOrder from "../SendOrder/SendOrder";
-import OrderList from "../../SharedComponent/OrdersList/OrderList";
-import MyOrdersContainer from "../OrderList/MyOrdersContainer";
+import UserMainRoutes from "./UserMainRoutes";
+import UserMainTabs from "./UserMainTabs";
 
 interface Props {
     route: RouteComponentProps
 }
 
-export default class Main extends React.Component<Props, any> {
+interface State {
+    activeTab: string | null;
+    user: any;
+    loading: boolean;
+}
+
+export default class Main extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {loading: true, user: null, activeTab: null};
@@ -22,18 +25,22 @@ export default class Main extends React.Component<Props, any> {
     componentDidMount() {
         const currentUser = firebase.auth().currentUser;
         if (currentUser) {
-            const db = firebase.firestore();
-            db.collection("users").doc(currentUser.uid).get().then(doc => {
-                if (doc.exists) {
-                    this.setState({loading: false, user: doc.data()});
-                } else {
-                    this.setState({loading: false, user: {}, activeTab: 'my-info'});
-                    this.props.route.history.push('/my-info');
-                }
-            });
+            this.loadUser(currentUser);
         } else {
             this.setState({loading: false});
         }
+    }
+
+    private loadUser(currentUser: any) {
+        const db = firebase.firestore();
+        db.collection("users").doc(currentUser.uid).get().then(doc => {
+            if (doc.exists) {
+                this.setState({loading: false, user: doc.data()});
+            } else {
+                this.setState({loading: false, user: {}, activeTab: 'my-info'});
+                this.props.route.history.push('/my-info');
+            }
+        });
     }
 
     render() {
@@ -42,32 +49,13 @@ export default class Main extends React.Component<Props, any> {
                 <UserAppHeader/>
                 <br/><br/>
                 {
-                    this.state.loading ?
-                        <HorizontalLoader/>
-                        :
+                    this.state.loading ? <HorizontalLoader/> :
                         <>
                             <div className={'container'}>
-                                <div className={'button-tabs'}>
-                                    <Link className={this.state.activeTab === 'home' ? 'active' : ''}
-                                          onClick={() => this.setState({activeTab: 'home'})}
-                                          to={'/'}>
-                                        الرئيسية
-                                    </Link>
-                                    <Link className={this.state.activeTab === 'new-order' ? 'active' : ''}
-                                          onClick={() => this.setState({activeTab: 'new-order'})}
-                                          to={'/new-order'}>
-                                        ارسال طلب
-                                    </Link>
-                                    <Link className={this.state.activeTab === 'my-info' ? 'active' : ''}
-                                          onClick={() => this.setState({activeTab: 'my-info'})}
-                                          to={'/my-info'}>
-                                        معلوماتي
-                                    </Link>
-                                </div>
-                                <Route exact path={"/my-info"} component={() => <RegisterForm/>}/>
-                                <Route exact path={"/"} component={() => <MyOrdersContainer/>}/>
-                                <Route exact path={"/new-order"} component={() => <SendOrder user={this.state.user}/>}/>
-                                <Route exact path={"/orders/:id"} component={() => <h1>Order Details</h1>}/>
+                                <UserMainTabs onTabClick={tab => this.setState({activeTab: tab})}
+                                              activeTab={this.state.activeTab}/>
+                                <UserMainRoutes onUserUpdate={(user) => this.setState({user: {...user}})}
+                                                user={this.state.user}/>
                             </div>
                         </>
                 }
