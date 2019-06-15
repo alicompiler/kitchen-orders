@@ -54,8 +54,9 @@ export default class Main extends React.Component<Props, State> {
                             <div className={'container'}>
                                 <UserMainTabs onTabClick={tab => this.setState({activeTab: tab})}
                                               activeTab={this.state.activeTab}/>
-                                <UserMainRoutes onUserUpdate={(user) => this.setState({user: {...user}})}
-                                                user={this.state.user}/>
+                                <UserMainRoutes onUserUpdate={(user) => {
+                                    this.setState({user: {...user}});
+                                }} user={this.state.user}/>
                             </div>
                         </>
                 }

@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Route, RouteComponentProps} from "react-router";
 import {Link} from "react-router-dom";
-import AppHeader from "../../SharedComponent/AppHeader";
 import UnfinishedOrdersContainer from "../Orders/UnfinishedOrdersContainer";
 import AllOrdersContainer from "../Orders/AllOrdersContainer";
 import UserAppHeader from "../../User/UserAppHeader";

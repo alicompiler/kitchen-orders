@@ -11,9 +11,9 @@ export default class UserAppHeader extends React.Component {
                         <p>نظام الطلبات</p>
                     </div>
                     <div className={'actions'} style={{cursor: 'pointer'}}>
-                        <a onClick={() => firebase.auth().signOut()}>
+                        <span onClick={() => firebase.auth().signOut()}>
                             <i className={'fas fa-sign-out-alt'} style={{fontSize: 24, color: '#FFF'}}/>
-                        </a>
+                        </span>
                     </div>
                 </div>
             </div>

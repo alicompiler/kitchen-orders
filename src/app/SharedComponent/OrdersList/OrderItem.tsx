@@ -10,10 +10,6 @@ interface Props {
 
 export default class OrderItem extends React.Component<Props> {
 
-    constructor(props: Props) {
-        super(props);
-    }
-
     render() {
         const order = this.props.order;
         return <div className={`order-list-item`}>

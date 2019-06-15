@@ -1,6 +1,4 @@
 import * as React from "react";
-import firebase from "../../Bootstrap/Firebase";
-import HorizontalLoader from "../HorizontalLoader/HorizontalLoader";
 import OrderItem from "./OrderItem";
 
 

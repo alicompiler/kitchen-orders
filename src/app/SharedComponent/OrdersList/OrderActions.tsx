@@ -1,6 +1,5 @@
 import * as React from "react";
 import OrderStateManager from "../../Admin/Services/OrderStateManager";
-import OrderStatus from "./OrderStatus";
 import HorizontalLoader from "../HorizontalLoader/HorizontalLoader";
 
 interface Props {

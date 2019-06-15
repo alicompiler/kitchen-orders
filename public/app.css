@@ -38,8 +38,8 @@
     width: 140px;
     border-radius: 120px;
     color: #FFFFFF;
-    padding: 8px;
-    font-size: 16px;
+    padding: 4px;
+    font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     display: block;
@@ -242,7 +242,7 @@ body {
     align-items: center;
 }
 
-.orders .order-item .order-item-info .order-count > a {
+.orders .order-item .order-item-info .order-count > span {
     margin-right: 16px;
 }
 

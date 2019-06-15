@@ -14,18 +14,18 @@ export default class Orders extends React.Component<Props> {
         return this.props.orders.map((order: any, index: number) => {
             return <div className={'order-item'} key={index}>
                 <div className={'order-item-info'}>
-                    <a onClick={() => this.props.removeOrder(index)} className={'delete-button'}>
+                    <span onClick={() => this.props.removeOrder(index)} className={'delete-button'}>
                         <i className={'fas fa-trash-alt'}/>
-                    </a>
+                    </span>
                     <p className={'order-name'}>{order.name}</p>
                     <div className={'order-count'}>
                         <p className={'order-count'}>{order.count}</p>
-                        <a onClick={() => this.props.increaseOrderCount(index)} className={'plus-button'}>
+                        <span onClick={() => this.props.increaseOrderCount(index)} className={'plus-button'}>
                             <i className={'fas fa-plus-square'}/>
-                        </a>
-                        <a onClick={() => this.props.decreaseOrderCount(index)} className={'minus-button'}>
+                        </span>
+                        <span onClick={() => this.props.decreaseOrderCount(index)} className={'minus-button'}>
                             <i className={'fas fa-minus-square'}/>
-                        </a>
+                        </span>
                     </div>
                 </div>
                 <div className={'order-item-note'}>

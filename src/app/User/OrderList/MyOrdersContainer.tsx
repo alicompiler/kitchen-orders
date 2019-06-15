@@ -1,4 +1,3 @@
-import * as React from "react";
 import OrdersContainer from "../../SharedComponent/OrdersList/OrdersContainer";
 import firebase from "../../Bootstrap/Firebase";
 

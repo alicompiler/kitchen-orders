@@ -34,7 +34,7 @@ export default class SendOrder extends React.Component<Props, State> {
             sending: false,
             sendingFail: false,
             done: false,
-            place: props.user.place
+            place: props.user.place ? props.user.place : ''
         };
     }
 
@@ -69,7 +69,6 @@ export default class SendOrder extends React.Component<Props, State> {
     private removeOrder = (index: number) => {
         const orders = [...this.state.orders];
         orders.splice(index, 1);
-        console.log(orders);
         this.setState({orders: orders});
     };
 

@@ -21,7 +21,6 @@ export default class App extends React.Component<Props, State> {
     componentDidMount() {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log(user);
                 const userType = user.email ? UserType.ADMIN : UserType.USER;
                 this.setState({loading: false, userType: userType});
                 if (window.location.href.endsWith("/login/user") || window.location.href.endsWith("/login/admin")) {

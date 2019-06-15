@@ -12,7 +12,7 @@ export default class OrderHeader extends React.Component<Props> {
         let {bgStatus, colorStatus, message} = this.getOrderStatusMetadata(order);
 
         return <div className={'user-info'}>
-            <img alt={'avatar image'} src={'/images/user.png'}/>
+            <img alt={'avatar'} src={'/images/user.png'}/>
             <div className={'info'}>
                 <p className={'name'}>{order.user}</p>
                 <p className={'place'}>{order.place}</p>

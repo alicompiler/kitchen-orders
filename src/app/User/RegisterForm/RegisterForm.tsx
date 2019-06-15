@@ -26,7 +26,6 @@ export default class RegisterForm extends React.Component<Props, State> {
             if (doc.exists) {
                 const data = doc.data()!;
                 this.setState({name: data.name, place: data.place});
-                this.props.onUpdate({name: data.name, place: data.place});
             }
         });
     }
@@ -57,7 +56,7 @@ export default class RegisterForm extends React.Component<Props, State> {
         db.collection("users").doc(user.uid).set(data)
             .then(() => {
                 this.setState({sending: false});
-                this.props.onUpdate(user);
+                this.props.onUpdate(data);
             }).catch(() => {
             this.setState({sending: false});
         });
