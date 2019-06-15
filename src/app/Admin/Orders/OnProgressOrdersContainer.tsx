@@ -1,15 +1,14 @@
 import OrdersContainer from "../../SharedComponent/OrdersList/OrdersContainer";
 import firebase from "../../Bootstrap/Firebase";
+import OrderStatus from "../../SharedComponent/OrdersList/OrderStatus";
 
 
-export default class UnfinishedOrdersContainer extends OrdersContainer {
+export default class OnProgressOrdersContainer extends OrdersContainer {
 
     protected fetchOrders(): void {
         const db = firebase.firestore();
         db.collection("orders")
-            .where("status", ">", 0)
-            .where("status", "<", 100)
-            .orderBy("status")
+            .where("status", "==", OrderStatus.ON_PROGRESS)
             .orderBy("time", "desc")
             .onSnapshot((snapshot) => {
                 snapshot.docChanges().forEach(change => {

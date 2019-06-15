@@ -29,8 +29,8 @@ export default class OrderHeader extends React.Component<Props> {
         let colorStatus = '#454545';
         let message = 'الطلب مرسل';
         if (order.status === OrderStatus.ON_PROGRESS) {
-            bgStatus = '#F0F3BD';
-            colorStatus = '#222';
+            bgStatus = '#DE6E4B';
+            colorStatus = '#FFF';
             message = 'جاري العمل';
         } else if (order.status === OrderStatus.DONE) {
             bgStatus = '#02C39A';

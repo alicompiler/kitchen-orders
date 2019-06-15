@@ -40,7 +40,7 @@ export default class SendOrder extends React.Component<Props, State> {
 
     componentDidMount() {
         const db = firebase.firestore();
-        db.collection("menu").get().then((snapshot: any) => {
+        db.collection("menu").orderBy("name").get().then((snapshot: any) => {
             const menu: any = [];
             snapshot.forEach((doc: any) => {
                 const data = doc.data();
@@ -107,6 +107,7 @@ export default class SendOrder extends React.Component<Props, State> {
             time: firebase.firestore.FieldValue.serverTimestamp(),
             status: OrderStatus.WAITING
         };
+
         db.collection("orders").add(order)
             .then(() => this.setState({sending: false, sendingFail: false, done: true}))
             .catch(() => this.setState({sending: false, sendingFail: true, done: false}));
