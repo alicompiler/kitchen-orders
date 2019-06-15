@@ -28,7 +28,7 @@ export default class App extends React.Component<Props, State> {
                     window.location.href = "/";
                 }
             } else {
-                this.setState({loading: false})
+                this.setState({loading: false, userType: undefined});
             }
         })
     }

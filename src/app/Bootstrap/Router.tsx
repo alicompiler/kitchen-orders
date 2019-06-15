@@ -56,6 +56,7 @@ export default class AppRouter extends React.Component<Props> {
             <Route exact path={"/"} component={() => <HomePage/>}/>
             <Route exact path={"/login/admin"} component={() => <AdminSignIn/>}/>
             <Route exact path={"/login/user"} component={() => <SignIn/>}/>
+            <Route component={() => <HomePage/>}/>
         </Switch>
     }
 

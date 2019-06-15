@@ -26,6 +26,7 @@ export default class RegisterForm extends React.Component<Props, State> {
             if (doc.exists) {
                 const data = doc.data()!;
                 this.setState({name: data.name, place: data.place});
+                this.props.onUpdate({name: data.name, place: data.place});
             }
         });
     }
