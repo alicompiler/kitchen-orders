@@ -25,6 +25,7 @@ export default class HomePage extends React.Component<Props> {
                 </div>
 
             </div>
+            <br/><br/>
         </div>
     }
 }
