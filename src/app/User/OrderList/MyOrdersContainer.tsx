@@ -9,13 +9,15 @@ export default class MyOrdersContainer extends OrdersContainer {
         const db = firebase.firestore();
         const user = firebase.auth().currentUser as any;
         db.collection("orders")
+            .orderBy("time", "desc")
             .where("userId", "==", user.uid)
             .onSnapshot((snapshot) => {
-                const orders: any[] = [];
-                snapshot.forEach((doc) => {
-                    orders.push({...doc.data(), orderId: doc.id});
+                snapshot.docChanges().forEach(change => {
+                    this.setState((state: any) => {
+                        return {orders: [change.doc.data()].concat(state.orders)};
+                    });
                 });
-                this.setState({orders: orders, loading: false, error: false});
+                this.setState({loading: false, error: false});
             })
     }
 

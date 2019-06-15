@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import AppHeader from "../../SharedComponent/AppHeader";
 import UnfinishedOrdersContainer from "../Orders/UnfinishedOrdersContainer";
 import AllOrdersContainer from "../Orders/AllOrdersContainer";
+import UserAppHeader from "../../User/UserAppHeader";
 
 interface Props {
     route: RouteComponentProps
@@ -18,7 +19,7 @@ export default class Main extends React.Component<Props, any> {
     render() {
         return (
             <div>
-                <AppHeader/>
+                <UserAppHeader/>
                 <br/><br/>
                 <div className={'container'}>
                     <div className={'button-tabs'}>

@@ -11,11 +11,21 @@ export default class UnfinishedOrdersContainer extends OrdersContainer {
             .where("status", ">", 0)
             .where("status", "<", 100)
             .onSnapshot((snapshot) => {
-                const orders: any[] = [];
-                snapshot.forEach((doc) => {
-                    orders.push({...doc.data(), orderId: doc.id});
+                snapshot.docChanges().forEach(change => {
+                    console.log(change);
+                    if (change.type === "added") {
+                        this.setState((state: any) => {
+                            return {orders: [{...change.doc.data(), orderId: change.doc.id}].concat(state.orders)};
+                        });
+                    } else if (change.type === "removed") {
+                        this.setState((state: any) => {
+                            const orders = [...state.orders];
+                            orders.splice(change.oldIndex, 1);
+                            return {orders: [...orders]};
+                        });
+                    }
                 });
-                this.setState({orders: orders, loading: false, error: false});
+                this.setState({loading: false, error: false});
             });
     }
 }
