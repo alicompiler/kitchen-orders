@@ -1,7 +1,6 @@
 import OrdersContainer from "./../../SharedComponent/OrdersList/OrdersContainer";
 import firebase from "./../../Bootstrap/Firebase";
 
-
 export default class AllOrdersContainer extends OrdersContainer {
 
     protected getFirestoreQuery() : any{
@@ -10,5 +9,4 @@ export default class AllOrdersContainer extends OrdersContainer {
             .orderBy("time", "desc")
             .limit(50);
     }
-
 }

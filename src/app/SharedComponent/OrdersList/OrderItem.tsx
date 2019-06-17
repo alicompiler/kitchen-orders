@@ -1,5 +1,6 @@
 import * as React from "react";
 import OrderActions from "./OrderActions";
+import OrderUserActions from "./OrderUserActions";
 import OrderItems from "./OrderItems";
 import OrderHeader from "./OrderHeader";
 import beep from "../../../utils/Beep";
@@ -50,7 +51,10 @@ export default class OrderItem extends React.Component<Props> {
             <OrderItems order={order}/>
 
             {
-                this.props.isAdmin === true && <OrderActions order={order}/>
+                this.props.isAdmin === true ? 
+                    <OrderActions order={order}/>
+                    :
+                    <OrderUserActions order={order}/>
             }
         </div>
     }
