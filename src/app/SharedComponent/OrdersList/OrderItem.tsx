@@ -17,7 +17,6 @@ export default class OrderItem extends React.Component<Props> {
 
     constructor(props: Props) {
         super(props);
-        console.log(props.order.orderId);
         if (props.order.isNew) {
             beep();
             this.cancelInterval = setInterval(() => {

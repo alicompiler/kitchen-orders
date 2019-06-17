@@ -8,6 +8,8 @@ interface Props {
 
 export default abstract class OrdersContainerBase extends React.Component<Props, any> {
 
+    protected firstDownloadedDocs = new Set();
+
     protected constructor(props: Props) {
         super(props);
         this.state = {orders: [], loading: true, error: false};
@@ -17,8 +19,67 @@ export default abstract class OrdersContainerBase extends React.Component<Props,
         this.fetchOrders();
     }
 
+    protected fetchOrders(): void {
+        const query = this.getFirestoreQuery();
+        query.get().then((snapshot:any) => {
+            const orders: any = [];
+            snapshot.forEach((doc:any) => {
+                this.firstDownloadedDocs.add(doc.id);
+                orders.push({
+                    ...doc.data(),
+                    orderId: doc.id
+                });
+            });
 
-    protected abstract fetchOrders(): void ;
+            this.setState({orders: orders, loading: false, error: false},
+                () => this.listenForChanges());
+        });
+    } 
+
+    protected listenForChanges():void {
+            this.getFirestoreQuery().onSnapshot(((snapshot:any) => {
+                snapshot.docChanges().forEach((change: any) => {
+                    if (change.type === "added") {
+                        this.onNewOrder(change);
+                    } else if (change.type === "removed") {
+                        this.onOrderRemoved(change);
+                    } else if (change.type === "modified") {
+                        this.onOrderModified(change);
+                    }
+                });
+            }));
+    }
+
+    private onNewOrder(change : any) : void{
+        if (this.firstDownloadedDocs.has(change.doc.id)) {
+            return;
+        }
+        const orders = [{
+            ...change.doc.data(),
+            orderId : change.doc.id,
+            isNew : new Date().getTime()
+        }].concat(this.state.orders);
+
+        this.setState({orders: orders});
+    }
+
+    private onOrderRemoved(change : any):void{
+        this.setState((state: any) => {
+            const orders = [...state.orders];
+            orders.splice(change.oldIndex, 1);
+            return {orders: [...orders]};
+        });
+    }
+
+    private onOrderModified(change : any):void{
+        this.setState((state: any) => {
+            const orders = [...state.orders];
+            orders[change.oldIndex] = {...change.doc.data(), orderId: change.doc.id};
+            return {orders: [...orders]};
+        });
+    }
+
+    protected abstract getFirestoreQuery() : any;
 
     render() {
         if (this.state.loading) {
