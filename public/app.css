@@ -274,6 +274,7 @@ body {
     padding: 16px;
     border-radius: 3px;
     margin-bottom: 24px;
+    position: relative;
 }
 
 .order-list-item .user-info {
