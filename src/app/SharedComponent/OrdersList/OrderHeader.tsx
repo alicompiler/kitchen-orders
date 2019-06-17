@@ -10,12 +10,13 @@ export default class OrderHeader extends React.Component<Props> {
         const order = this.props.order;
 
         let {bgStatus, colorStatus, message} = this.getOrderStatusMetadata(order);
-
+        const date = new Date(this.props.order.time.seconds * 1000);
         return <div className={'user-info'}>
             <img alt={'avatar'} src={'/images/user.png'}/>
             <div className={'info'}>
                 <p className={'name'}>{order.user}</p>
                 <p className={'place'}>{order.place}</p>
+                <p className='date'>{this.formatDate(date)}</p>
                 <span className={'status'} style={{
                     background: bgStatus,
                     color: colorStatus
@@ -23,6 +24,13 @@ export default class OrderHeader extends React.Component<Props> {
             </div>
         </div>
     }
+
+    private formatDate = (date:Date) => {
+        const hours = String(date.getHours()).length > 1 ? date.getHours() : ("0" + date.getHours());
+        const minutes = String(date.getMinutes()).length > 1 ? date.getMinutes() : ("0" + date.getMinutes());
+        return hours + ":" + minutes;
+      }
+      
 
     private getOrderStatusMetadata = (order: any) => {
         let bgStatus = '#EEE';
