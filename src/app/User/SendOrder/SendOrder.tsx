@@ -19,7 +19,8 @@ interface State {
     sending: boolean,
     sendingFail: boolean,
     done: boolean,
-    place: string
+    place: string,
+    guest : any;
 }
 
 export default class SendOrder extends React.Component<Props, State> {
@@ -27,6 +28,7 @@ export default class SendOrder extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            guest : false,
             menu: [],
             loadingMenu: true,
             orders: [],
@@ -88,7 +90,6 @@ export default class SendOrder extends React.Component<Props, State> {
     private setOrderNote = (index: number, note: string) => {
         const orders = [...this.state.orders];
         orders[index].note = note;
-        console.log(orders);
         this.setState({orders: orders});
     };
 
@@ -105,6 +106,7 @@ export default class SendOrder extends React.Component<Props, State> {
             user: this.props.user.name,
             place: this.state.place,
             time: firebase.firestore.FieldValue.serverTimestamp(),
+            guest : this.state.guest,
             status: OrderStatus.WAITING
         };
 
@@ -163,7 +165,12 @@ export default class SendOrder extends React.Component<Props, State> {
 
                 {
                     this.state.orders.length > 0 &&
-                    <SendOrderFormFooter place={this.state.place} sending={this.state.sending} send={this.send}/>
+                    <SendOrderFormFooter 
+                                onGuestChange={e=>{
+                                    this.setState({guest : !this.state.guest});
+                                }} guest={this.state.guest}
+                                onPlaceChange={e=>this.setState({place : e.target.value})} place={this.state.place}
+                                sending={this.state.sending} send={this.send}/>
                 }
 
             </div>

@@ -47,6 +47,18 @@ export default class OrderItem extends React.Component<Props> {
                     borderRadius: 100,
                 }}/>
             }
+            {
+                order.guest &&
+                <img alt={'new'} src={'/images/guest.png'} style={{
+                    position: 'absolute',
+                    left: 16,
+                    top: 100,
+                    width: 64,
+                    height: 64,
+                    borderRadius: 100,
+                }}/>
+
+            }
             <OrderHeader order={order}/>
             <OrderItems order={order}/>
 
