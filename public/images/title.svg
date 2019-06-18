@@ -1,0 +1,16 @@
+<svg width="250" height="100" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with arbfonts.com - http://arbfonts.com -->
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="102" width="252" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <text style="cursor: move;" stroke="#050505" transform="matrix(2.003954363053282,0,0,1,-434.17210956639843,0) " xml:space="preserve" text-anchor="start" font-family="'Arbfonts',Arbfonts" font-size="50" id="svg_1" y="251" x="374.479281" stroke-width="0" fill="#fcfcfc">ضيافة</text>
+  <ellipse id="svg_4" cy="233.4375" cx="389.5" stroke-width="1.5" stroke="#050505" fill="#e51212"/>
+  <text style="cursor: move;" stroke="#050505" transform="matrix(1.6452349424362183,0,0,1,-79.68651539087296,0) " xml:space="preserve" text-anchor="start" font-family="'Arbfonts',Arbfonts" font-size="60" id="svg_7" y="69.4375" x="78.521621" stroke-width="0" fill="#ffffff">ضيافة</text>
+ </g>
+</svg>

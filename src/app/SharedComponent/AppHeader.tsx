@@ -8,7 +8,7 @@ export default class AppHeader extends React.Component {
                 <div className={'app-header-content'}>
                     <div className={'logo-and-name'}>
                         <img alt={'coffee cup'} src={'/images/logo.png'}/>
-                        <p>نظام الطلبات</p>
+                        <p>ضيافة</p>
                     </div>
                     <div className={'actions'}>
 
