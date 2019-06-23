@@ -19,7 +19,7 @@ export default class LoadingContainer extends React.Component<Props> {
             <LoadingBox/>
             <h3>{this.props.message}</h3>
 
-            <h3 style={{marginTop: 35, color: '#565656'}}>POWERED BY : Sindbad</h3>
+            <h3 style={{marginTop: 35, color: '#565656'}}>DEVELOPED BY : Sindbad</h3>
         </div>
     }
 }
