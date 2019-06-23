@@ -1,4 +1,5 @@
 import * as React from "react";
+import LoadingBox from "./LoadingBox";
 
 interface Props {
     message: string;
@@ -15,8 +16,10 @@ export default class LoadingContainer extends React.Component<Props> {
             alignItems: 'center',
         };
         return <div className="loading-container" style={style}>
-            <img alt={""} src={'/images/loading.gif'} style={{width: 96, height: 96}}/>
+            <LoadingBox/>
             <h3>{this.props.message}</h3>
+
+            <h3 style={{marginTop: 35, color: '#565656'}}>POWERED BY : Sindbad</h3>
         </div>
     }
 }
