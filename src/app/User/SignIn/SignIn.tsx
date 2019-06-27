@@ -1,5 +1,6 @@
 import * as React from "react";
 import firebase from "../../Bootstrap/Firebase";
+import LoadingBox from "../../SharedComponent/LoadingBox";
 
 interface Props {
 }
@@ -22,7 +23,9 @@ export default class SignIn extends React.Component<Props, any> {
     };
 
     render() {
-        return null;
+        return <div style={{ display : 'flex' , alignItems : 'center' , justifyContent : 'center' , height : '100vh'}}>
+            <LoadingBox />
+        </div>;
     }
 
 }
