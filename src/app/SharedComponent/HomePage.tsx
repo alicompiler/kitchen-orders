@@ -15,11 +15,10 @@ export default class HomePage extends React.Component<Props> {
             <div style={{maxWidth: 1024, margin: 'auto'}}>
                 <img alt={'home background'} src={imagePath} className={'home_background'}/>
 
-
                 <br/><br/><br/><br/>
 
                 <div className={'login-buttons-container'}>
-                    <Link className={'admin-login-button'} to={'/login/admin'}>تسجيل الدخول كـ مدير</Link>
+                    <Link className={'admin-login-button'} to={'/login/admin'}>تسجيل الدخول كـ موظف خدمة</Link>
                     <span style={{width: 24, height: 10}}/>
                     <Link className={'user-login-button'} to={'/login/user'}>تسجيل الدخول كـ مستخدم</Link>
                 </div>
