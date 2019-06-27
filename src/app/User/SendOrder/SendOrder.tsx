@@ -48,12 +48,21 @@ export default class SendOrder extends React.Component<Props, State> {
                 const data = doc.data();
                 menu[doc.id] = data.name;
             });
+            menu['special-order'] = 'طلب خاص';
             this.setState({ menu: menu, loadingMenu: false });
         }).catch(() => this.setState({ error: true, loadingMenu: false }))
     }
 
     private addItem = (item: any) => {
         const orders = [...this.state.orders];
+
+        if (item.value === 'special-order') {
+            orders.push({ id: item.value, isSpecialOrder: true, count: 1 });
+            this.setState({ orders: orders });
+            return;
+        }
+
+
         let itemExists = false;
         for (let i = 0; i < orders.length; i++) {
             if (item.value === orders[i].id) {
@@ -66,6 +75,12 @@ export default class SendOrder extends React.Component<Props, State> {
         }
         this.setState({ orders: orders });
     };
+
+    private onSpecialOrderChange = (index: number, value: string) => {
+        const orders = [...this.state.orders];
+        orders[index].name = value;
+        this.setState({ orders: orders });
+    }
 
 
     private removeOrder = (index: number) => {
@@ -94,7 +109,7 @@ export default class SendOrder extends React.Component<Props, State> {
     };
 
     private send = () => {
-        const orders = this.state.orders;
+        const orders = this.state.orders.filter(item => item.name && item.name.trim().length > 0);
         const db = firebase.firestore();
 
         this.setState({ sending: true, sendingFail: false, done: false });
@@ -156,6 +171,7 @@ export default class SendOrder extends React.Component<Props, State> {
 
                 <div className={'orders'}>
                     <Orders orders={this.state.orders} removeOrder={this.removeOrder}
+                        setSpecialOrder={this.onSpecialOrderChange}
                         increaseOrderCount={this.increaseOrderCount}
                         decreaseOrderCount={this.decreaseOrderCount}
                         setOrderNote={this.setOrderNote} />
