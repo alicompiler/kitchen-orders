@@ -540,3 +540,16 @@ body {
   bottom: -6px;
   right: -6px;
 }
+
+.order-list-item .actions{
+  padding-right: 40px;
+}
+
+.dv-star-rating {
+  display: inline-flex !important;
+  flex-direction: row-reverse !important;
+}
+
+.dv-star-rating i{
+  font-size: 24px;
+}
