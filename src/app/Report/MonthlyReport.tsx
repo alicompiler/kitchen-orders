@@ -1,5 +1,6 @@
 import * as React from "react";
 import firebase from "../Bootstrap/Firebase";
+import Table from "./Table";
 
 interface Props {
 }
@@ -9,14 +10,14 @@ interface State {
     orders: any[];
     loading: boolean;
     error: any;
-    filteredOrders: any[];
+    filteredOrders: any;
 }
 
 export default class MonthlyReport extends React.Component<Props, State> {
 
     constructor(props: any) {
         super(props);
-        this.state = {date: '', orders: [], filteredOrders: [], loading: true, error: null};
+        this.state = {date: '', orders: [], filteredOrders: {}, loading: true, error: null};
     }
 
 
@@ -32,30 +33,61 @@ export default class MonthlyReport extends React.Component<Props, State> {
 
     private onDateChange = (e: any): void => {
         const month = e.target.value;
-        const filteredOrders: any[] = [];
+
+
+        const ordersDic: any = {};
+
         if (month) {
             this.state.orders.forEach(order => {
                 const data = order.data();
+
                 const time = new Date(data.time.seconds * 1000);
 
                 if (Number(time.getMonth() + 1) === Number(month)) {
-                    filteredOrders.push(data);
+
+
+                    const o = ordersDic[data.userId];
+                    if (o) {
+                        o.orders.push(data);
+                    } else {
+                        ordersDic[data.userId] = {
+                            name: data.user,
+                            orders: []
+                        }
+                    }
                 }
             });
 
-            filteredOrders.sort((a: any, b: any) => {
-                if (a.time.seconds < b.time.seconds)
-                    return -1;
-                else if (a.time.seconds < b.time.seconds)
-                    return 1;
-                return 0;
-            })
+            const keys = Object.keys(ordersDic);
+            keys.forEach(key => {
+                const orders = ordersDic[key].orders;
+                orders.sort((a: any, b: any) => {
+                    if (a.time.seconds < b.time.seconds)
+                        return -1;
+                    else if (a.time.seconds < b.time.seconds)
+                        return 1;
+                    return 0;
+                });
+            });
+
+
         }
 
-        this.setState({filteredOrders: filteredOrders});
+        this.setState({filteredOrders: ordersDic});
     };
 
     render(): any {
+
+        const keys = Object.keys(this.state.filteredOrders);
+
+        keys.sort((a: any, b: any) => {
+            if (this.state.filteredOrders[a].name < this.state.filteredOrders[b].name)
+                return -1;
+            else if (a < b)
+                return 1;
+            return 0;
+        });
+
         if (this.state.loading)
             return <h1>جاري تحميل البيانات...</h1>;
         if (this.state.error) {
@@ -92,36 +124,14 @@ export default class MonthlyReport extends React.Component<Props, State> {
 
                 <br/><br/>
 
-                <table className={'report-table'}>
-                    <thead>
-                    <tr>
-                        <th>المستخدم</th>
-                        <th>الوقت</th>
-                        <th>المكان</th>
-                        <th>الطلبات</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        this.state.filteredOrders.map((order: any) => {
-                            return <tr>
-                                <td>{order.user}</td>
-                                <td>{MonthlyReport.toStringTime(order.time.seconds)}</td>
-                                <td>{order.place}</td>
-                                <td>
-                                    <ul>
-                                        {
-                                            order.items.map((item: any) => {
-                                                return <li>{item.name}</li>
-                                            })
-                                        }
-                                    </ul>
-                                </td>
-                            </tr>
-                        })
-                    }
-                    </tbody>
-                </table>
+                {
+                    keys.map((key: string, index: number) => {
+                        const orders = this.state.filteredOrders[key].orders;
+                        const name = this.state.filteredOrders[key].name;
+
+                        return <Table key={index} orders={orders} name={name}/>
+                    })
+                }
 
                 <br/><br/>
 
