@@ -1,17 +1,21 @@
 import * as React from "react";
-import firebase from "firebase";
+import firebase from "./../Bootstrap/Firebase";
 
 
 interface State {
     downloading: boolean;
     error: any;
+    downloaded: boolean;
 }
 
 export default class DownloadMonthlyReport extends React.Component<any, State> {
 
+
+    private data: string = '';
+
     constructor(props: any) {
         super(props);
-        this.state = {downloading: false, error: false};
+        this.state = {downloading: false, error: false, downloaded: false};
     }
 
 
@@ -40,14 +44,32 @@ export default class DownloadMonthlyReport extends React.Component<any, State> {
                             return {...doc.data()};
                         });
                         const data = JSON.stringify(orders);
+                        this.data = data;
                         localStorage.setItem('monthly-report', data);
                         this.download(data);
-                        this.setState({downloading: false, error: false});
+                        this.setState({downloading: false, error: false , downloaded : true});
                     })
-                    .catch(e => this.setState({error: e, downloading: false}));
+                    .catch(e => this.setState({error: e, downloading: true}));
             }}>
                 تحميل التقرير الشهري
             </button>
+
+            {
+                this.state.downloaded &&
+                <button style={{padding: 24, width: 180, display: 'inline-block'}}
+                        disabled={this.state.downloading || this.state.error}
+                        className={'main-button'} onClick={() => {
+                    const storage = firebase.storage();
+                    const ref = storage.ref('/monthly-report.json');
+                    ref.putString(this.data)
+                        .then(snap => {
+                            console.log(snap);
+                        });
+                }}>
+                    رفع التقرير الشهري
+                </button>
+            }
+
         </div>
     }
 

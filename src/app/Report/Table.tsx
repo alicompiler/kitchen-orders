@@ -24,6 +24,7 @@ export default class Table extends React.Component<Props> {
                     <th>الوقت</th>
                     <th>المكان</th>
                     <th>الطلبات</th>
+                    <th/>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,17 +37,18 @@ export default class Table extends React.Component<Props> {
                                        color: order.status === OrderStatus.REJECTED ? 'white' : 'inherent'
                                    }}>
                             <td>{order.user}</td>
-                            <td>{MonthlyReport.toStringTime(order.time.seconds)}</td>
+                            <td style={{direction: 'ltr'}}>{MonthlyReport.toStringTime(order.time.seconds)}</td>
                             <td>{order.place}</td>
                             <td>
                                 <ul>
                                     {
-                                        order.items.map((item: any) => {
-                                            return <li>{item.name}</li>
+                                        order.items.map((item: any, index: number) => {
+                                            return <li key={index}>{item.name}</li>
                                         })
                                     }
                                 </ul>
                             </td>
+                            <td>{order.guest ? 'ضيف' : '-'}</td>
                         </tr>
                     })
 
@@ -55,6 +57,7 @@ export default class Table extends React.Component<Props> {
                 </tbody>
             </table>
 
+            <h4 style={{textAlign: 'left'}}>المجموع الكلي : {this.props.orders.length}</h4>
 
         </div>
     }
