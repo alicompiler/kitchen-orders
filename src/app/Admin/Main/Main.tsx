@@ -6,6 +6,7 @@ import AllOrdersContainer from "../Orders/AllOrdersContainer";
 import UserAppHeader from "../../User/UserAppHeader";
 import OnProgressOrdersContainer from "../Orders/OnProgressOrdersContainer";
 import MonthlyReport from "../../Report/MonthlyReport";
+import DownloadMonthlyReport from "../../Report/DownloadMonthlyReport";
 
 interface Props {
     route: RouteComponentProps
@@ -45,6 +46,7 @@ export default class Main extends React.Component<Props, any> {
                     <Route exact path={"/all"} component={() => <AllOrdersContainer isAdmin={true}/>}/>
 
                     <Route exact path={'/report/monthly'} component={() => <MonthlyReport/>}/>
+                    <Route exact path={'/report/download/monthly'} component={() => <DownloadMonthlyReport/>}/>
 
                 </div>
             </div>

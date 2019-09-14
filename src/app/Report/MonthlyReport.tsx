@@ -1,5 +1,4 @@
 import * as React from "react";
-import firebase from "../Bootstrap/Firebase";
 import Table from "./Table";
 
 interface Props {
@@ -15,21 +14,28 @@ interface State {
 
 export default class MonthlyReport extends React.Component<Props, State> {
 
+    private inputFile: any;
+
     constructor(props: any) {
         super(props);
-        this.state = {date: '', orders: [], filteredOrders: {}, loading: true, error: null};
+        this.state = {date: '', orders: [], filteredOrders: {}, loading: false, error: null};
     }
 
 
-    componentDidMount() {
-        const firestore = firebase.firestore();
-        firestore.collection('orders').get()
-            .then(snap => {
-                console.log(snap.docs);
-                this.setState({loading: false, error: null, orders: snap.docs});
-            })
-            .catch(e => this.setState({error: e}));
-    }
+    private readReportFile = (e: any) => {
+        if (e.target.files && e.target.files[0]) {
+            const myFile = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener('load', (event: any) => {
+                const report = event.target.result;
+                const arr = JSON.parse(report);
+                this.setState({orders: arr});
+            });
+
+            reader.readAsText(myFile, 'utf-8');
+        }
+    };
 
     private onDateChange = (e: any): void => {
         const month = e.target.value;
@@ -39,7 +45,7 @@ export default class MonthlyReport extends React.Component<Props, State> {
 
         if (month) {
             this.state.orders.forEach(order => {
-                const data = order.data();
+                const data = order;
 
                 const time = new Date(data.time.seconds * 1000);
 
@@ -102,6 +108,21 @@ export default class MonthlyReport extends React.Component<Props, State> {
         }
         return (
             <div>
+
+                <div style={{textAlign: 'center', padding: 30}}>
+                    <button className={'main-button'}
+                            onClick={() => {
+                                console.log(this.inputFile);
+                                this.inputFile.click()
+                            }}
+                            style={{padding: 24, width: 180, display: 'inline-block'}}>
+                        اختيار ملف التقرير
+                    </button>
+                    <input type={'file'} onChange={this.readReportFile} ref={ref => this.inputFile = ref} hidden/>
+                </div>
+
+                <hr/>
+
                 <h3>التقرير الشهري</h3>
                 {
                     (!this.state.error && !this.state.loading) &&

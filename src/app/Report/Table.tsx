@@ -1,5 +1,6 @@
 import * as React from "react";
 import MonthlyReport from "./MonthlyReport";
+import OrderStatus from "../SharedComponent/OrdersList/OrderStatus";
 
 interface Props {
     orders: any[];
@@ -29,7 +30,11 @@ export default class Table extends React.Component<Props> {
                 {
 
                     this.props.orders.map((order: any, index: number) => {
-                        return <tr key={index}>
+                        return <tr key={index}
+                                   style={{
+                                       background: order.status === OrderStatus.REJECTED ? 'red' : 'inherent',
+                                       color: order.status === OrderStatus.REJECTED ? 'white' : 'inherent'
+                                   }}>
                             <td>{order.user}</td>
                             <td>{MonthlyReport.toStringTime(order.time.seconds)}</td>
                             <td>{order.place}</td>
