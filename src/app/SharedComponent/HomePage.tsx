@@ -18,9 +18,9 @@ export default class HomePage extends React.Component<Props> {
                 <br/><br/><br/><br/>
 
                 <div className={'login-buttons-container'}>
-                    <Link className={'admin-login-button'} to={'/login/admin'}>تسجيل الدخول كـ موظف خدمة</Link>
+                    <Link className={'admin-login-button'} to={'/login/admin'}>لوحة التحكم</Link>
                     <span style={{width: 24, height: 10}}/>
-                    <Link className={'user-login-button'} to={'/login/user'}>تسجيل الدخول كـ مستخدم</Link>
+                    <Link className={'user-login-button'} to={'/login/user'}>ارسال الطلبات</Link>
                 </div>
 
             </div>

@@ -1,6 +1,7 @@
 import * as React from "react";
 import OrderStateManager from "../../Admin/Services/OrderStateManager";
 import HorizontalLoader from "../HorizontalLoader/HorizontalLoader";
+import StarRatingComponent from "react-star-rating-component";
 
 interface Props {
     order: any;
@@ -41,6 +42,12 @@ export default class OrderActions extends React.Component<Props, any> {
                     لم تتم العملية , تحقق من الاتصال بالانترنت ثم حاول مرة ثانية
                 </p>
             }
+
+            <StarRatingComponent
+                name='order-rating' value={this.props.order.rating ? this.props.order.rating : 0}
+                starCount={5} editing={false}
+            />
+            
         </div>
     }
 
